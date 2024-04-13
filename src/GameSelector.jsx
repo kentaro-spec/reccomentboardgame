@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import NumberOfPlayersForm from "./NumberOfPlayersForm";
 import TimeSelectionForm from "./TimeSelectionForm";
 import TypeSelectionForm from "./TypeSelectionForm";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../firebase"; // firebaseからdbをインポート
-import './App.css';
+import "./App.css";
 
 function GameSelector() {
   const [numberOfPlayers, setNumberOfPlayers] = useState("2");
@@ -40,9 +40,22 @@ function GameSelector() {
       games.push({ id: doc.id, ...doc.data() });
     });
 
-    console.log("取得したゲームデータ:", games); // データをコンソールに出力
+    // ドキュメントの数が3未満の場合はそのまま返す
+    if (games.length <= 3) {
+      console.log("取得したゲームデータ:", games); // データをコンソールに出力
+      return games;
+    }
 
-    return games;
+    // ドキュメントの数が3より多い場合はランダムに3つ選んで返す
+    const selectedGames = [];
+    while (selectedGames.length < 3) {
+      const randomIndex = Math.floor(Math.random() * games.length);
+      selectedGames.push(games[randomIndex]);
+      games.splice(randomIndex, 1);
+    }
+    console.log("取得したゲームデータ:", selectedGames); // データをコンソールに出力
+
+    return selectedGames;
   };
 
   const fetchData = async () => {

@@ -3,8 +3,8 @@ import { collection, addDoc } from "firebase/firestore";
 import { db } from "../firebase"; // Firebase Firestore インスタンスをインポート
 
 function WriteForm() {
-  const [numberOfPlayers, setNumberOfPlayers] = useState("2");
-  const [playTime, setPlayTime] = useState("15");
+  const [numberOfPlayers, setNumberOfPlayers] = useState(2);
+  const [playTime, setPlayTime] = useState(15);
   const [title, setTitle] = useState("");
   const [type, setType] = useState("わいわい");
 
